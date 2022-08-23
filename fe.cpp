@@ -2,6 +2,6 @@
 
 int main()
 {
-    std::cout << "Sverre er dårlig i VSCODE";
+    std::cout << "hallaballa";
     return 0;
 }
