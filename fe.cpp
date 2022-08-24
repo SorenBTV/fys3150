@@ -4,7 +4,7 @@
 
 double f(double x); //Declaration
 main(){
-    std::vector<double> x = {0 , 1};
+    std::vector<double> x = (0 , 1);
     double res = f(x);
     return 0;
 }
