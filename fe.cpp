@@ -1,16 +1,16 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
 
-double f(double x, double y); //Declaration
-
-int main() {
-    double x = 2;
-    double y = 1;
-    double res = f(x, y); //Should return 2*2 = 4.
+double f(double x); //Declaration
+main(){
+    double x = {0 , 1};
+    double res = f(x);
     return 0;
 }
 
-double f(double x, double y){
-    //Provide definition of function here:
-    return x*x+y;
+
+double f(double x){
+    return 100*e**{-10*x};
 }
+
