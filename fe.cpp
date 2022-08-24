@@ -2,10 +2,10 @@
 #include <cmath>
 
 
-double f(x);
+double f( double x);
 int main()
 {
-    int x=2;
+    double x = 2;
     double res = f(x);
     return 0;
 }
