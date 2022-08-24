@@ -1,7 +1,11 @@
 #include <iostream>
+#include <cmath>
 
+
+int f(int x);
 int main()
 {
-    std::cout << "Sverre er dårlig\n";
+    int x=2
+    res = f(x)
     return 0;
 }
