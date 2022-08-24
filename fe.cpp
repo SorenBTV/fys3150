@@ -2,7 +2,7 @@
 #include <cmath>
 
 
-int f(int x);
+int f(x);
 int main()
 {
     int x=2;
