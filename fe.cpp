@@ -5,7 +5,7 @@
 int f(int x);
 int main()
 {
-    int x=2
-    res = f(x)
+    int x=2;
+    res = f(x);
     return 0;
 }
