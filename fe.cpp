@@ -11,6 +11,6 @@ main(){
 
 
 double f(double x){
-    return 100*e**{-10*x};
+    return 100*e**pow(-10*x);
 }
 
