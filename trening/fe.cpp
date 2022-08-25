@@ -1,16 +1,19 @@
 #include <iostream>
-#include <cmath>
+#include <armadillo>
 #include <fstream>
 
-double f(double x); //Declaration
-main(){
-    std::vector<double> x = (0 , 1);
-    double res = f(x);
+double f(double x_1); //Declaration
+int main(){
+    double x_1 = 0;
+    double res = f(x_1);
+    std::cout<<res <<"\n";
     return 0;
 }
 
 
-double f(double x){
-    return 100*std::exp(-10*x);
+double f(double x_1){
+    return 100*exp(-10*x_1);
 }
+
+
 
