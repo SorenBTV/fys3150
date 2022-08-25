@@ -11,6 +11,6 @@ main(){
 
 
 double f(double x){
-    return 100*exp(-10*x);
+    return 100*std::exp(-10*x);
 }
 
