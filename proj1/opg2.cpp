@@ -1,13 +1,14 @@
 #include <iostream>
 #include <armadillo>
 
-arma::vec x = arma::vec(5).fill(2.);
-//double u(double x); //Declaration
+
+vec x = linspace(int a, int b, int n); // declaration
 
 int main(){
-   //double n = 5;
-   double res =  x(0,5);
-   std::cout<<res<<"/n";
+    int a = 0
+    int b = 1
+    int n = 51
+    vec x = linspace(a,b,n)
+   std::cout<<vec x <<"\n";
    return 0;
-
-}
+   }
