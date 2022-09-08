@@ -11,7 +11,7 @@ int main(){
     
     arma::vec x;
     
-    x = arma::linspace(0, 1, 100);
+    x = arma::linspace(0, 1, 101);
     arma::vec res = u(x);
     std::cout << res <<"\n";
 
@@ -34,5 +34,5 @@ int main(){
 
 
 arma::vec u(arma::vec x_in){
-    return 1-(1-exp(-10)*x_in)-exp(-10*x_in);
+    return 1-(1-exp(-10))*x_in-exp(-10*x_in);
 }
