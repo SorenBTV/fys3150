@@ -29,16 +29,16 @@ arma::mat matrix(int a, int b, int c, int n, arma::mat){
 arma::mat A = arma::mat(n, n);
 
 // Filling empty matrix
-for (int i = 2; i < n; i++){
-    A(0, 0) = b;
-    A(0, 1) = c;
+A(0, 0) = b;
+A(0, 1) = c;
+A(n-1,n-1) = b;
+A(n-1, n-2) = a;
 
+for (int i = 2; i < n; i++){
     A(i-1, i-2) = a;
     A(i-1, i-1) = b;
     A(i-1, i) = c;
 
-    A(n-1,n-1) = b;
-    A(n-1, n-2) = a;
 }
 return A;
 }
