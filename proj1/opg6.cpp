@@ -18,6 +18,8 @@ arma::mat A = arma::mat(n, n);
 arma::mat mat = matrix(a, b, c, n, A);
 std::cout << mat << "\n";
 
+
+
 return 0;
 
 }

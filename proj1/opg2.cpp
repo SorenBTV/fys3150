@@ -4,17 +4,19 @@
 #include <fstream>
 #include <iomanip>
 
-arma::vec u(arma::vec);
+arma::vec u(arma::vec); // Decalaration
 
 
 int main(){
     
-    arma::vec x;
+    arma::vec x; // Declaration
     
+    // Defining our x array and calling function for result.
     x = arma::linspace(0, 1, 101);
     arma::vec res = u(x);
     std::cout << res <<"\n";
 
+    // Creation of .txt file with the outputs from our results.
     std::string filename = "x_u.txt";
     
     std::ofstream ofile;
@@ -32,7 +34,7 @@ int main(){
     return 0;
 }
 
-
+// Defining function
 arma::vec u(arma::vec x_in){
     return 1-(1-exp(-10))*x_in-exp(-10*x_in);
 }
