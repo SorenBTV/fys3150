@@ -4,7 +4,9 @@
 #include <fstream>
 #include <iomanip>
 
-arma::mat matrix(int a, int b, int c,int n, arma::mat); // Declaration
+// Declaration
+arma::mat matrix(int a, int b, int c,int n, arma::mat);
+double solve(int a, int b, int c, int n, arma::mat); 
 
 int main(){
 // Defining variables
@@ -40,4 +42,10 @@ for (int i = 2; i < n; i++){
     A(i-1, i) = c;
 }
 return A;
+}
+
+double solve(int a, int b, int c, int n, arma::mat A){
+
+// backward substitution
+
 }
