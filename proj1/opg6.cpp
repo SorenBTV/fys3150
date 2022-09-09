@@ -38,7 +38,6 @@ for (int i = 2; i < n; i++){
     A(i-1, i-2) = a;
     A(i-1, i-1) = b;
     A(i-1, i) = c;
-
 }
 return A;
 }
