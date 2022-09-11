@@ -20,7 +20,7 @@ double h = 1/n1;
 
 
 x = arma::linspace(0.2, 0.8, n);
-arma::vec x1 = arma::linspace(0, 1, n+2);
+arma::vec x1 = arma::linspace(0, 1, n+2); 
 arma::vec g = f(x)*h*h;
 arma::vec res = solve(a, b, c, g, n);
 v = arma::linspace(0,0,n+2);
