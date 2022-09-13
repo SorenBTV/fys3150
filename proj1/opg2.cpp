@@ -10,14 +10,14 @@ arma::vec u(arma::vec); // Decalaration
 int main(){
     
     arma::vec x; // Declaration
-    
+    int n = 1000;
     // Defining our x array and calling function for result.
-    x = arma::linspace(0, 1, 101);
+    x = arma::linspace(0, 1, n);
     arma::vec res = u(x);
     std::cout << res <<"\n";
 
     // Creation of .txt file with the outputs from our results.
-    std::string filename = "x_u.txt";
+    std::string filename = "x_u1000.txt";
     
     std::ofstream ofile;
     ofile.open(filename);
