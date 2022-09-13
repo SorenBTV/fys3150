@@ -14,7 +14,7 @@ int main(){
     // Defining our x array and calling function for result.
     x = arma::linspace(0, 1, n);
     arma::vec res = u(x);
-    std::cout << res <<"\n";
+    //std::cout << res <<"\n";
 
     // Creation of .txt file with the outputs from our results.
     std::string filename = "x_u.txt";
@@ -24,7 +24,7 @@ int main(){
     int width = 12;
     int prec = 4;
 
-    for (int i = 0; i<=100; i++){
+    for (int i = 0; i<=n; i++){
         ofile << std::setw(width) << std::setprecision(prec) << std::scientific << x(i)
           << std::setw(width) << std::setprecision(prec) << std::scientific << res(i)
           << std::endl;
