@@ -6,7 +6,7 @@
 #include <cassert>
 
 //Declaration
-double max_offdiag_symmetric(const arma::mat& A, int& k, int &l);
+double max_offdiag_symmetric(arma::mat A, int& k, int &l);
 void max_offdiag_symmetric_test();
 
 
@@ -20,7 +20,7 @@ return 0;
 
 
 //Functions
-double max_offdiag_symmetric(const arma::mat& A, int& k, int &l){
+double max_offdiag_symmetric(arma::mat A, int& k, int &l){
     int N = A.n_cols;
     double max_value = 0;
 
