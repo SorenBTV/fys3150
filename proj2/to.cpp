@@ -7,11 +7,10 @@
 #define pi 3.14159265359
 
 // Declaration
-arma::vec x, xh, v; 
-arma::mat eigvec;
 arma::mat matrix(double a, double d, int N, arma::mat);
-arma::vec ana_eigval(int N, double a, double d);
-arma::mat ana_eigvec(int N);
+arma::vec ana_lambda(int N, double a, double d);
+arma::mat ana_v(int N);
+bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat ana_eigvec, int N);
 
 int main(){
 // Defining variables
@@ -22,31 +21,35 @@ double h = 1./(n);
 double a = -1/(h*h);
 double d = 2/(h*h);
 
-arma::vec x = arma::linspace(0, L, n);
-arma::vec xh = arma::vec(n).fill(0.);
-arma::vec v = arma::vec(n).fill(0.);
 
-for (int i=0 ; i<=n; i++)
-{    xh[i] = xh[0] + i * h;}
-
-
-//Defining matrix and calling function
+//Defining matrix and calling function to produce matrix
 arma::mat A = arma::mat(N, N);
 arma::mat B = matrix(a, d, N, A);
-std::cout << B << "\n";
+//std::cout << B << "\n";
 
+//Producing eigenvalues and eigenvector with armadillo
 arma::vec eigval;
 arma::mat eigvec;
 arma::eig_sym(eigval, eigvec, B);
+//std::cout << eigvec << "\n";
 
-std::cout << eigvec << "\n";
+//Producing analytical eigenvalues and eigenvectors
+arma::vec ana_eigval = ana_lambda(N, a, d);
+arma::mat ana_eigvec = ana_v(N);
+//std::cout << ana_eigvec << "\n";
 
-arma::vec ana_eigv = ana_eigval(N, a, d);
-arma::mat ana_v = ana_eigvec(N);
-std::cout << ana_v << "\n";
+
+// Comparing armadillo and analytical solutions
+double comp = compare(eigval, ana_eigval, eigvec, ana_eigvec, N);
+if(comp = true){std::cout << "Results agree" << "\n";}
+else{std::cout << "Results don't agree" << "\n";}
 
 return 0;
 }
+
+
+// Functions for making our matrix A, solving for analytical eigenvalues and eigenvectors,
+// and for comparing them to armadillos eigenvector and eigenvalues
 
 arma::mat matrix(double a, double d, int N, arma::mat){
 
@@ -67,7 +70,7 @@ for (int i = 2; i < N; i++){
 return A;
 }
 
-arma::vec ana_eigval(int N, double a, double d){
+arma::vec ana_lambda(int N, double a, double d){
     arma::vec eig = arma::vec(N).fill(0.);
 
         for (int i=1 ; i<=N ; i++){
@@ -76,7 +79,7 @@ arma::vec ana_eigval(int N, double a, double d){
     return eig;
 }
 
-arma::mat ana_eigvec(int N){
+arma::mat ana_v(int N){
     arma::mat v = arma::mat(N,N).fill(0);
 
     for(int i=1; i<=N; i++){
@@ -87,4 +90,23 @@ arma::mat ana_eigvec(int N){
     v.col(i-1) = arma::normalise(v_i);
     }
 return v;
+}
+
+bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat ana_eigvec, int N){
+    double tol = 1e-7;
+
+    for (int i=0; i<=N; i++){
+        double comp_val = std::abs(eigval(i)) - std::abs(ana_eigval(i)) > tol;
+
+        for (int j=0; j<=N; j++){
+            double comp_vec = std::abs(eigvec(i,j)) - std::abs(ana_eigvec(i,j)) > tol;
+
+            if(comp_val, comp_vec = true){
+                return true;
+            }
+            else{ return false;}
+        }
+    }
+    if (true){return true;}
+    else{return false;}
 }
