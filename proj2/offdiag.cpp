@@ -42,6 +42,7 @@ double max_offdiag_symmetric(const arma::mat& A, int& k, int &l){
     }
 
 void max_offdiag_symmetric_test(){
+    //Setting up testing matrix
     arma::mat A = arma::mat(4, 4, arma::fill::eye);
     A(1, 2) = -0.7;
     A(2, 1) = -0.7;
@@ -50,6 +51,7 @@ void max_offdiag_symmetric_test(){
     int k,l;
     double max_value;
 
+    //Calling function and checking the correct answer against a tolerance
     max_value = max_offdiag_symmetric(A, k, l);
     //std::cout << max_value << "\n";
     assert(max_value - 0.7 <= 1e-7);
