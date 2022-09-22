@@ -18,6 +18,7 @@ max_offdiag_symmetric_test();
 return 0;
 }
 
+
 //Functions
 
 double max_offdiag_symmetric(const arma::mat& A, int& k, int &l){
