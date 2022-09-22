@@ -14,8 +14,8 @@ bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat
 
 int main(){
 // Defining variables
-int n = 7;
-int N = n-1;
+int N = 6;
+int n = N+1;
 int L = 1;
 double h = 1./(n);
 double a = -1/(h*h);
