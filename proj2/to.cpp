@@ -23,9 +23,9 @@ double d = 2/(h*h);
 
 
 //Defining matrix and calling function to produce matrix
-arma::mat A = arma::mat(N, N);
-arma::mat B = matrix(a, d, N, A);
-//std::cout << B << "\n";
+arma::mat B = arma::mat(N, N);
+arma::mat A = matrix(a, d, N, B);
+//std::cout << A << "\n";
 
 //Producing eigenvalues and eigenvector with armadillo
 arma::vec eigval;
