@@ -51,6 +51,7 @@ void max_offdiag_symmetric_test(){
     double max_value;
 
     max_value = max_offdiag_symmetric(A, k, l);
+    //std::cout << max_value << "\n";
     assert(max_value - 0.7 <= 1e-7);
     assert(k == 1);
     assert(l == 2);
