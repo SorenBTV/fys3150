@@ -30,7 +30,7 @@ arma::mat A = matrix(a, d, N, B);
 //Producing eigenvalues and eigenvector with armadillo
 arma::vec eigval;
 arma::mat eigvec;
-arma::eig_sym(eigval, eigvec, B);
+arma::eig_sym(eigval, eigvec, A);
 //std::cout << eigvec << "\n";
 
 //Producing analytical eigenvalues and eigenvectors
@@ -96,13 +96,13 @@ bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat
     double tol = 1e-8;
 
     for (int i=0; i<N; i++){
-        bool comp_val = (std::abs(eigval(i)) - std::abs(ana_eigval(i)) < tol);
+        bool comp_val = abs(ana_eigval(i)) - abs(eigval(i)) < tol;
         for (int j=0; j<N; j++){
-            bool comp_vec = std::abs(eigvec(i,j)) - std::abs(ana_eigvec(i,j)) < tol;
+            bool comp_vec = abs(ana_eigvec(i,j)) - abs(eigvec(i,j)) < tol;
             std::cout << comp_val << comp_vec << "\n";
-            if(comp_val, comp_vec == true){
-                continue;
-            }
+            if(comp_val == true){continue;}
+            else{ return false;}
+            if(comp_vec == true){continue;}
             else{ return false;}
         }
     }
