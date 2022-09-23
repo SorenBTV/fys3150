@@ -41,7 +41,7 @@ arma::mat ana_eigvec = ana_v(N);
 
 // Comparing armadillo and analytical solutions
 double comp = compare(eigval, ana_eigval, eigvec, ana_eigvec, N);
-if(comp = true){std::cout << "Results agree" << "\n";}
+if(comp == true){std::cout << "Results agree" << "\n";}
 else{std::cout << "Results don't agree" << "\n";}
 
 return 0;
@@ -93,20 +93,18 @@ return v;
 }
 
 bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat ana_eigvec, int N){
-    double tol = 1e-7;
+    double tol = 1e-8;
 
-    for (int i=0; i<=N; i++){
-        double comp_val = std::abs(eigval(i)) - std::abs(ana_eigval(i)) > tol;
-
-        for (int j=0; j<=N; j++){
-            double comp_vec = std::abs(eigvec(i,j)) - std::abs(ana_eigvec(i,j)) > tol;
-
-            if(comp_val, comp_vec = true){
-                return true;
+    for (int i=0; i<N; i++){
+        bool comp_val = (std::abs(eigval(i)) - std::abs(ana_eigval(i)) < tol);
+        for (int j=0; j<N; j++){
+            bool comp_vec = std::abs(eigvec(i,j)) - std::abs(ana_eigvec(i,j)) < tol;
+            std::cout << comp_val << comp_vec << "\n";
+            if(comp_val, comp_vec == true){
+                continue;
             }
             else{ return false;}
         }
     }
-    if (true){return true;}
-    else{return false;}
+    return true;
 }

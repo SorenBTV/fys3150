@@ -22,7 +22,7 @@ arma::vec ana_lambda(int N, double a, double d);
 
 arma::mat ana_v(int N);
 
-bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat ana_eigvec);
+bool compare(arma::vec eigenvalues, arma::vec ana_eigval, arma::mat eigenvectors, arma::mat ana_eigvec, int N);
 
 
 
@@ -68,23 +68,21 @@ arma::mat ana_v(int N){
 return v;
 }
 
-bool compare(arma::vec eigvalues, arma::vec ana_eigval, arma::mat eigvectors, arma::mat ana_eigvec, int N){
-    double tol = 1e-7;
+bool compare(arma::vec eigenvalues, arma::vec ana_eigval, arma::mat eigenvectors, arma::mat ana_eigvec, int N){
+    double tol = 1e-8;
 
-    for (int i=0; i<=N; i++){
-        double comp_val = std::abs(eigvalues(i)) - std::abs(ana_eigval(i)) > tol;
-
-        for (int j=0; j<=N; j++){
-            double comp_vec = std::abs(eigvectors(i,j)) - std::abs(ana_eigvec(i,j)) > tol;
-
-            if(comp_val, comp_vec = true){
-                return true;
+    for (int i=0; i<N; i++){
+        bool comp_val = (std::abs(eigenvalues(i)) - std::abs(ana_eigval(i)) < tol);
+        for (int j=0; j<N; j++){
+            bool comp_vec = std::abs(eigenvectors(i,j)) - std::abs(ana_eigvec(i,j)) < tol;
+            std::cout << comp_val << comp_vec << "\n";
+            if(comp_val, comp_vec == true){
+                continue;
             }
             else{ return false;}
         }
     }
-    if (true){return true;}
-    else{return false;}
+    return true;
 }
 
 double max_offdiag_symmetric(const arma::mat& A, int& k, int &l){
@@ -173,22 +171,23 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     int k,l;
     double max_value = max_offdiag_symmetric(A,k,l);
     
-    
+    std::cout  << A << "\n";
     while(max_value > eps){
         jacobi_rotate(A, eigenvectors, k, l);
         iterations += 1;
         max_value = max_offdiag_symmetric(A,k,l);
-        //std::cout << max_value<<"\n";
+        //std::cout << max_value\<<"\n";
     }
 
     //Stops if the number of iterations reaches maxiter
     //assert(iterations < maxiter);
     converged = true;
-    std::cout << eigenvalues << eigenvectors << "\n";
+    std::cout  << A << "\n";
     
     //Normalising eigenvectors
-    for (int i=0; i<(int)A.n_cols-1; i++){
+    for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = A(i,i);
-        eigenvectors.col(i) = arma::normalise(eigenvectors.col(i));   
+        eigenvectors.col(i) = arma::normalise(A.col(i));   
     }
+    std::cout  << eigenvalues << eigenvectors << "\n";
 }
