@@ -36,7 +36,7 @@ arma::eig_sym(eigval, eigvec, A);
 //Producing analytical eigenvalues and eigenvectors
 arma::vec ana_eigval = ana_lambda(N, a, d);
 arma::mat ana_eigvec = ana_v(N);
-//std::cout << ana_eigvec << "\n";
+std::cout << ana_eigvec << "\n";
 
 
 // Comparing armadillo and analytical solutions
@@ -99,7 +99,7 @@ bool compare(arma::vec eigval, arma::vec ana_eigval, arma::mat eigvec, arma::mat
         bool comp_val = abs(ana_eigval(i)) - abs(eigval(i)) < tol;
         for (int j=0; j<N; j++){
             bool comp_vec = abs(ana_eigvec(i,j)) - abs(eigvec(i,j)) < tol;
-            std::cout << comp_val << comp_vec << "\n";
+            //std::cout << comp_val << comp_vec << "\n";
             if(comp_val == true){continue;}
             else{ return false;}
             if(comp_vec == true){continue;}

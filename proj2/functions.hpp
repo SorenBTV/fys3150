@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iomanip>
 #include <cassert>
-#include<math.h>
+#include <math.h>
 #define pi 3.14159265359
 
 //Declaration
@@ -130,16 +130,16 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
     int N_A = (int)A.n_cols;
     int N_R = (int)R.n_cols;
 
-    //while(std::abs(A(k,l))>eps){
-        double t, c, s;
+    
+        double t, c, s, tau;
 
-        double tau = (A(l,l)-A(k,k))/(2*A(l,l));
-
-        if(tau < 0){t = -tau - sqrt(1 + tau * tau);}
-        else{t = -tau + sqrt(1 + tau * tau);}
+        tau = (A(l,l)-A(k,k))/(2*A(l,l));
+        if(tau < 0){t = -1/(-tau + sqrt(1 + tau * tau));}
+        else{t = 1/(tau + sqrt(1 + tau * tau));}
 
         c = 1/(sqrt(1 + t * t));
         s = c * t;
+
 
         double Am = A(k,k);
 
@@ -157,6 +157,7 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
                 A(l,i) = A(i,l);
             }
             else{continue;}
+            
         }  
 
         for (int i=0; i<N_R; i++){
@@ -164,7 +165,7 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
             R(i,k) = R(i,k) * c - R(i,l) * s;
             R(i,l) = R(i,l) * c + Rm * s;
         }
-    //}
+    
 }
 
 void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::mat& eigenvectors, const int maxiter, int& iterations, bool& converged){
@@ -172,10 +173,9 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     int k,l;
     double max_value = max_offdiag_symmetric(A,k,l);
     
-    while(max_value > eps){
+    while(max_value >= eps){
         jacobi_rotate(A, eigenvectors, k, l);
         iterations += 1;
-        std::cout << max_value <<"\n";
         max_value = max_offdiag_symmetric(A,k,l);
     }
 
@@ -183,9 +183,28 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     assert(iterations < maxiter);
     converged = true;
     
-    //Normalising eigenvectors
+    //Normalising eigenvectors and defining eigenvalues
     for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = A(i,i);
-        eigenvectors.col(i) = arma::normalise(A.col(i));   
+        eigenvectors.col(i) = arma::normalise(eigenvectors.col(i));   
+    }
+        for (int i = 0; i < (int)A.n_cols; ++i)
+    {
+
+        int e = i;
+        for (int j = i + 1; j < (int)A.n_cols; ++j)
+        {
+            if (eigenvalues(j) < eigenvalues(e))
+            {
+                e = j;
+            }
+        }
+        if (i != e)
+        {
+            auto tmp = eigenvectors.col(i);
+            eigenvectors.col(i) = eigenvectors.col(e);
+            eigenvectors.col(e) = tmp;
+            std::swap(eigenvalues(i), eigenvalues(e));
+        }
     }
 }
