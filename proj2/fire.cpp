@@ -19,7 +19,7 @@ arma::mat A = matrix(a, d, N, B);
 //Producing eigenvalues and eigenvector with the Jacobi solver
 arma::vec eigenvalues;
 arma::mat eigenvectors;
-int maxiter = 1000;
+int maxiter = 6000;
 int iterations = 0;
 bool converged;
 jacobi_eigensolver(A, 1e-8, eigenvalues, eigenvectors, maxiter, iterations, converged);
@@ -32,7 +32,7 @@ arma::mat ana_eigvec = ana_v(N);
 
 
 // Comparing Jacobi and analytical solutions
-double comp = compare(eigenvalues, ana_eigval, eigenvectors, ana_eigvec, N);
+bool comp = compare(eigenvalues, ana_eigval, eigenvectors, ana_eigvec, N);
 if(comp = true){std::cout << "Results agree" << "\n";}
 else{std::cout << "Results don't agree" << "\n";}
 
