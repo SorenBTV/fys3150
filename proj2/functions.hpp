@@ -5,27 +5,8 @@
 #include <iomanip>
 #include <cassert>
 #include <math.h>
+#include <stdlib.h>
 #define pi 3.14159265359
-
-//Declaration
-double max_offdiag_symmetric(const arma::mat& A, int& k, int &l);
-
-void max_offdiag_symmetric_test();
-
-void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l);
-
-void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::mat& eigenvectors, 
-                        const int maxiter, int& iterations, bool& converged);
-
-arma::mat matrix(double a, double d, int N, arma::mat);
-
-arma::vec ana_lambda(int N, double a, double d);
-
-arma::mat ana_v(int N);
-
-bool compare(arma::vec eigenvalues, arma::vec ana_eigval, arma::mat eigenvectors, arma::mat ana_eigvec, int N);
-
-
 
 //Functions
 arma::mat matrix(double a, double d, int N, arma::mat){

@@ -1,9 +1,10 @@
 #include "functions.hpp"
 
-int main(){
+
+int main(int argc, char* argv[]){
 
 // Defining variables
-int N = 10;
+int N = atoi(argv[1]);
 int n = N+1;
 int L = 1;
 double h = 1./(n);
