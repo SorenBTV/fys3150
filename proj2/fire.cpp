@@ -23,7 +23,6 @@ int maxiter = 100;
 int iterations = 0;
 bool converged;
 jacobi_eigensolver(A, 1e-8, eigenvalues, eigenvectors, maxiter, iterations, converged);
-
 std::cout << abs(eigenvectors) << "\n";
 
 //Producing analytical eigenvalues and eigenvectors

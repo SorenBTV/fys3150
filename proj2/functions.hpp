@@ -156,15 +156,10 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
                 A(i,l) = A(i,l) * c + Am * s;
                 A(l,i) = A(i,l);
             }
-            else{continue;}
-            
-        }  
-
-        for (int i=0; i<N_R; i++){
             double Rm = R(i,k);
             R(i,k) = R(i,k) * c - R(i,l) * s;
-            R(i,l) = R(i,l) * c + Rm * s;
-        }
+            R(i,l) = R(i,l) * c + Rm * s;    
+        }  
     R = arma::normalise(R);
 }
 
@@ -186,26 +181,5 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     //Normalising eigenvectors and defining eigenvalues
     for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = A(i,i);
-        //eigenvectors.col(i) = arma::normalise(eigenvectors.col(i)); 
-        //arma::sort_index(eigenvectors);  
-    }
-        for (int i = 0; i < (int)A.n_cols; ++i)
-    {
-
-        int e = i;
-        for (int j = i + 1; j < (int)A.n_cols; ++j)
-        {
-            if (eigenvalues(j) < eigenvalues(e))
-            {
-                e = j;
-            }
-        }
-        if (i != e)
-        {
-            auto tmp = eigenvectors.col(i);
-            eigenvectors.col(i) = eigenvectors.col(e);
-            eigenvectors.col(e) = tmp;
-            std::swap(eigenvalues(i), eigenvalues(e));
-        }
     }
 }
