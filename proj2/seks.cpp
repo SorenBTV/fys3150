@@ -20,7 +20,7 @@ arma::mat A = matrix(a, d, N, B);
 //Producing eigenvalues and eigenvector with the Jacobi solver
 arma::vec eigenvalues(N);
 arma::mat eigenvectors = arma::mat(N, N, arma::fill::eye);
-int maxiter = 1000;
+int maxiter = 100000;
 int iterations = 0;
 bool converged;
 jacobi_eigensolver(A, 1e-8, eigenvalues, eigenvectors, maxiter, iterations, converged);
@@ -34,7 +34,7 @@ for (int i=0; i<3; i++){
 }
 
  // Creation of .txt file with the outputs from our results.
-    std::string filename = "xhat_eigenvectors.txt";
+    std::string filename = "xhat_eigenvectors100.txt";
     
     std::ofstream ofile;
     ofile.open(filename);
