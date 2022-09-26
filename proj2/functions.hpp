@@ -76,7 +76,6 @@ bool compare(arma::vec eigenvalues, arma::vec ana_eigval, arma::mat eigenvectors
         bool comp_val = abs(ana_eigval(i)) - abs(eigenvalues(i)) < tol;
         for (int j=0; j<N; j++){
             bool comp_vec = abs(ana_eigvec(i,j)) - abs(eigenvectors(i,j)) < tol;
-            //std::cout << comp_val << comp_vec << "\n";
             if(comp_val == true){continue;}
             else{ return false;}
             if(comp_vec == true){continue;}
@@ -183,9 +182,9 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
 
     arma::uvec sort = arma::sort_index(eigenvalues);
     arma::vec tempval = eigenvalues;
-    arma::mat temp = eigenvectors;
+    arma::mat tempvec = eigenvectors;
     for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = tempval(sort(i));
-        eigenvectors(i) = temp(sort(i));
+        eigenvectors.col(i) = tempvec.col(sort(i));
     }
 }

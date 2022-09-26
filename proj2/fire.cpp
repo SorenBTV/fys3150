@@ -23,13 +23,12 @@ int maxiter = 1000;
 int iterations = 0;
 bool converged;
 jacobi_eigensolver(A, 1e-8, eigenvalues, eigenvectors, maxiter, iterations, converged);
-
-std::cout << abs(eigenvectors) << "\n";
+//std::cout << abs(eigenvectors) << "\n";
 
 //Producing analytical eigenvalues and eigenvectors
 arma::vec ana_eigval = ana_lambda(N, a, d);
 arma::mat ana_eigvec = ana_v(N);
-std::cout << abs(ana_eigvec) << "\n";
+//std::cout << abs(ana_eigvec) << "\n";
 
 
 // Comparing Jacobi and analytical solutions
