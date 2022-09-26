@@ -19,10 +19,11 @@ arma::mat A = matrix(a, d, N, B);
 //Producing eigenvalues and eigenvector with the Jacobi solver
 arma::vec eigenvalues(N);
 arma::mat eigenvectors = arma::mat(N, N, arma::fill::eye);
-int maxiter = 100;
+int maxiter = 1000;
 int iterations = 0;
 bool converged;
 jacobi_eigensolver(A, 1e-8, eigenvalues, eigenvectors, maxiter, iterations, converged);
+
 std::cout << abs(eigenvectors) << "\n";
 
 //Producing analytical eigenvalues and eigenvectors

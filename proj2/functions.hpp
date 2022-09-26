@@ -14,7 +14,7 @@ void max_offdiag_symmetric_test();
 
 void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l);
 
-void jacobi_eigensolver(const arma::mat& A, double eps, arma::vec& eigenvalues, arma::mat& eigenvectors, 
+void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::mat& eigenvectors, 
                         const int maxiter, int& iterations, bool& converged);
 
 arma::mat matrix(double a, double d, int N, arma::mat);
@@ -100,8 +100,7 @@ double max_offdiag_symmetric(const arma::mat& A, int& k, int &l){
                 max_value = std::abs(A(i,j));
                 k = i;
                 l = j;
-                }
-            else{max_value = max_value;}
+            }
         }
     }
     return max_value;
@@ -127,12 +126,13 @@ void max_offdiag_symmetric_test(){
 
 void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
     double eps = 1e-8;
-    int N_A = (int)A.n_cols;
+    int N = (int)A.n_cols;
         double t, c, s, tau;
 
         tau = (A(l,l)-A(k,k))/(2*A(k,l));
         if(tau < 0){t = -1/(-tau + sqrt(1 + tau * tau));}
         else{t = 1/(tau + sqrt(1 + tau * tau));}
+        //if(tau > 0){t = 1/(tau + sqrt(1 + tau * tau));}
 
         c = 1/(sqrt(1 + t * t));
         s = c * t;
@@ -145,7 +145,7 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
         A(k,l) = 0;
         A(l,k) = 0;
 
-        for (int i=0; i<N_A; i++)
+        for (int i=0; i<N; i++)
         {
             if(i != k && i != l){
                 double Am = A(i,k);
@@ -176,8 +176,12 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     assert(iterations < maxiter);
     converged = true;
     
-    //Normalising eigenvectors and defining eigenvalues
+    //Defining eigenvalues
     for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = A(i,i);
+    }
+    arma::uvec sort = arma::sort_index(eigenvalues);
+    for (int i=0; i<(int)A.n_cols; i++){
+        arma::mat eigenvectors_sorted.col(i) = eigenvectors(sort(i));
     }
 }
