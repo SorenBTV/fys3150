@@ -45,7 +45,8 @@ for (int i=0; i<3; i++){
         ofile << std::setw(width) << std::setprecision(prec) << std::scientific << xh(i) << std::endl;
     }
     for (int i = 0; i<3; i++){ofile << std::setw(width) << std::setprecision(prec) << std::scientific << eigenvalues(i)*eig.col(i);
-
+    }
+    for (int i = 0; i<3; i++){ofile << std::setw(width) << std::setprecision(prec) << std::scientific << eigenvalues(i) << std::endl;
     }
     ofile.close();
 
