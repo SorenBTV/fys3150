@@ -128,9 +128,6 @@ void max_offdiag_symmetric_test(){
 void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
     double eps = 1e-8;
     int N_A = (int)A.n_cols;
-    int N_R = (int)R.n_cols;
-
-    
         double t, c, s, tau;
 
         tau = (A(l,l)-A(k,k))/(2*A(k,l));
@@ -148,7 +145,8 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
         A(k,l) = 0;
         A(l,k) = 0;
 
-        for (int i=0; i<N_A; i++){
+        for (int i=0; i<N_A; i++)
+        {
             if(i != k && i != l){
                 double Am = A(i,k);
                 A(i,k) = A(i,k) * c - A(i,l) * s;
