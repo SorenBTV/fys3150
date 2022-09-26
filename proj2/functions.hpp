@@ -180,8 +180,12 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = A(i,i);
     }
+
     arma::uvec sort = arma::sort_index(eigenvalues);
+    arma::vec tempval = eigenvalues;
+    arma::mat temp = eigenvectors;
     for (int i=0; i<(int)A.n_cols; i++){
-        arma::mat eigenvectors_sorted.col(i) = eigenvectors(sort(i));
+        eigenvalues(i) = tempval(sort(i));
+        eigenvectors(i) = temp(sort(i));
     }
 }
