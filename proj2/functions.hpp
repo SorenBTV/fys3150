@@ -76,7 +76,7 @@ bool compare(arma::vec eigenvalues, arma::vec ana_eigval, arma::mat eigenvectors
         bool comp_val = abs(ana_eigval(i)) - abs(eigenvalues(i)) < tol;
         for (int j=0; j<N; j++){
             bool comp_vec = abs(ana_eigvec(i,j)) - abs(eigenvectors(i,j)) < tol;
-            std::cout << comp_val << comp_vec << "\n";
+            //std::cout << comp_val << comp_vec << "\n";
             if(comp_val == true){continue;}
             else{ return false;}
             if(comp_vec == true){continue;}
@@ -133,7 +133,7 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
     
         double t, c, s, tau;
 
-        tau = (A(l,l)-A(k,k))/(2*A(l,l));
+        tau = (A(l,l)-A(k,k))/(2*A(k,l));
         if(tau < 0){t = -1/(-tau + sqrt(1 + tau * tau));}
         else{t = 1/(tau + sqrt(1 + tau * tau));}
 
@@ -149,7 +149,7 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
         A(l,k) = 0;
 
         for (int i=0; i<N_A; i++){
-            if(i != k,l){
+            if(i != k && i != l){
                 double Am = A(i,k);
                 A(i,k) = A(i,k) * c - A(i,l) * s;
                 A(k,i) = A(i,k);
@@ -165,7 +165,7 @@ void jacobi_rotate(arma::mat& A, arma::mat& R, int k, int l){
             R(i,k) = R(i,k) * c - R(i,l) * s;
             R(i,l) = R(i,l) * c + Rm * s;
         }
-    
+    R = arma::normalise(R);
 }
 
 void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::mat& eigenvectors, const int maxiter, int& iterations, bool& converged){
@@ -186,7 +186,8 @@ void jacobi_eigensolver(arma::mat& A, double eps, arma::vec& eigenvalues, arma::
     //Normalising eigenvectors and defining eigenvalues
     for (int i=0; i<(int)A.n_cols; i++){
         eigenvalues(i) = A(i,i);
-        eigenvectors.col(i) = arma::normalise(eigenvectors.col(i));   
+        //eigenvectors.col(i) = arma::normalise(eigenvectors.col(i)); 
+        arma::sort_index(eigenvectors);  
     }
         for (int i = 0; i < (int)A.n_cols; ++i)
     {
