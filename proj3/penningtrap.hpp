@@ -1,4 +1,4 @@
-
+#include "Particle.hpp"
 
 class PenningTrap
 {
