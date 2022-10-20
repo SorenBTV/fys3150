@@ -4,7 +4,8 @@ class PenningTrap
 {
     double B_0;
     double V_0;
-    double d;
+    double d_in;
+    double ke;
 
     std::vector<Particle> p_in;
 
