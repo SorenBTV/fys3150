@@ -1,6 +1,7 @@
 #include <armadillo>
 #include <iostream>
 
+
 class Particle
 {
     public:

@@ -123,7 +123,7 @@ class PenningTrap
         return F;
     }
 
-    arma::mat krv(int i, arma::mat kr, arma::mat kv, int step, double dt, arma::vec r, arma::vec v)
+    void krv(int i, arma::mat kr, arma::mat kv, int step, double dt, arma::vec r, arma::vec v)
     {
         step = 0;
         for(int j=0; j<particles.size(); j++)
@@ -147,15 +147,13 @@ class PenningTrap
             particles[j] = {charge, mass, temp_r, temp_v};
             step += 3;
         }
-    return kr, kv;
 
     }
 
 
     // Evolve the system one time step (dt) using Runge-Kutta 4th order
-    void evolve_RK4(double dt, int N)
+    void evolve_RK4(double dt, double N)
     {
-        int t_end = 50;
         arma::mat r(N, particles.size()*3);
         arma::mat v(N, particles.size()*3);
 
@@ -189,12 +187,13 @@ class PenningTrap
             arma::mat kv4(3, particles.size());
 
 
-            kr1, kv1 = krv(i, kr1, kv1, 0, dt, r, v);
-            kr2, kv2 = krv(i, kr2, kv2, 0, dt, r, v);
-            kr3, kv3 = krv(i, kr3, kv3, 0, dt, r, v);
-            kr4, kv4 = krv(i, kr4, kv4, 0, dt, r, v);
+            krv(i, kr1, kv1, 0, dt, r, v);
+            krv(i, kr2, kv2, 0, dt, r, v);
+            krv(i, kr3, kv3, 0, dt, r, v);
+            krv(i, kr4, kv4, 0, dt, r, v);
 
-                    
+             /*       
+            //Updating position and velocity using RK 4th order
             step = 0;
             for(int j=0; j<particles.size(); j++)
             {
@@ -208,9 +207,39 @@ class PenningTrap
                 
                 step += 3;
             }
+            
+            step = 0;
+            for(int k=0; k<particles.size(); k++)
+            {
+                Particle p = particles[k];
+                double mass = p.m;
+                double charge = p.q;
+
+                arma::vec new_r = {r(i+1,step), r(i+1,step+1), r(i+1,step+2)};
+                arma::vec new_v = {v(i+1,step), v(i+1,step+1), v(i+1,step+2)};
+
+                particles[k] = Particle(mass, charge, new_r, new_v);
+
+                step += 3;
+            }
+            */
         }
+        
+        //std::cout << particles[0].pos << "\n";
+    
+    /*
+    std::ofstream ofile;
+    ofile.open(filename);
+    int width = 12;
+    int prec = 4;
 
-
+    for (int i = 0; i<=N; i++)
+    {
+        for(int j=0; j<=N; j++)
+        ofile << std::setw(width) << std::setprecision(prec) << std::scientific << r(i,j) << std::endl;
+    }
+    ofile.close();
+    */
         
     }
 
