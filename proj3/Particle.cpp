@@ -1,11 +1,11 @@
 #include "Particle.hpp"
 
-Particle::Particle(double charge, double mass, arma::vec position, arma::vec velocity)
+Particle::Particle(double charge_in, double mass_in, arma::vec position_in, arma::vec velocity_in)
 {
-    q = charge;
-    m = mass;
-    pos = position;
-    vel = velocity;
+    q = charge_in;
+    m = mass_in;
+    pos = position_in;
+    vel = velocity_in;
 }
 
 double Particle::charge()
@@ -26,4 +26,14 @@ arma::vec Particle::position()
 arma::vec Particle::velocity()
 {
     return vel;
+}
+
+void Particle::new_position(arma::vec new_r)
+{
+    r = new_r;
+}
+
+void Particle::new_velocity(arma::vec new_v)
+{
+    v = new_v;
 }
