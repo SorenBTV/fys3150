@@ -2,19 +2,17 @@
 #define __Lattice__
 
 #include <armadillo>
-#include <random>
-#include <map>
-#include <vector>
-#include <cmath>
+
 
 class Lattice
 {
     private:
 
     public:
-    int L, N;
-    double T, E, M, E_per, M_per;
-    arma::mat spin_matrix;
+    int L;
+    int N;
+    double T;
+    arma::Mat<int> spin_matrix;
 
     // A random number generator and the two basic 
     // probability distributions we need.
@@ -28,7 +26,7 @@ class Lattice
 
     //Functions
 
-    void fill_lattice(int seed=137);
+    void fill_lattice(int seed);
 
 
 };

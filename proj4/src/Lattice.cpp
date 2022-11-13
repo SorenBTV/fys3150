@@ -8,10 +8,9 @@
 
 Lattice::Lattice(int L_in, double T_in)
 {
-
   this->L = L;
   this->T = T;
-  arma::mat spin_matrix = arma::mat(L, L, arma::fill::zeros);
+  arma::Mat<int> spin_matrix = arma::Mat<int>(L, L, arma::fill::zeros);
   this->spin_matrix = spin_matrix;
 
 }
@@ -23,7 +22,6 @@ void Lattice::fill_lattice(int seed)
   std::uniform_int_distribution<int> dis(0,1);
   
   int num;
-
   for (int i = 0; i < L; i ++)
   {
     for (int j = 0; j < L; j ++)
