@@ -40,6 +40,8 @@ class Lattice
     uniform_int_distribution<int> dist;
     uniform_real_distribution<double> index;
 
+    double *E_dist_;
+
     double expectedE_;
     double expectedE2_;
     double expectedM_;

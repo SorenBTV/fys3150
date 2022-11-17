@@ -7,11 +7,11 @@ void Lattice::Initializer(int L, double T, int MC_cycles, bool ordered)
   T_ = T;
   N_ = L_*L_;
   MC_cycles_ = MC_cycles;
-  
+  E_dist_ = new double[N_*MC_cycles_];
 
 
   // Initial matrix
-  arma::Mat<int> spin_matrix = arma::Mat<int>(L, L).fill(1);
+  arma::Mat<int> spin_matrix = arma::Mat<int>(L_, L_).fill(1);
   spin_matrix_ = spin_matrix;
 
   mt19937 generator (123);
@@ -32,9 +32,8 @@ void Lattice::Initializer(int L, double T, int MC_cycles, bool ordered)
   }
 
 
-
   // Initial energy
-  double E_ = 0.;
+  double E_ = 0;
   for(int i =0; i < L_; i++)
   {
     for (int j= 0; j < L_; j++)
@@ -42,6 +41,7 @@ void Lattice::Initializer(int L, double T, int MC_cycles, bool ordered)
       E_ -= spin_matrix_(i,j) * (spin_matrix_(pbc(i,L_,-1),j) + spin_matrix_(i,pbc(j,L_,-1)));
     }
   }
+
 
 
   // Initial Magnetization
@@ -56,11 +56,11 @@ void Lattice::Initializer(int L, double T, int MC_cycles, bool ordered)
 
   // Boltzmann dist
   boltzmann_ = new double[17];
-  boltzmann_[0] = exp(8./T_);
-  boltzmann_[4] = exp(4./T_);
-  boltzmann_[8] = exp(0./T_);
-  boltzmann_[12] = exp(-4./T_);
-  boltzmann_[16] = exp(-8./T_);
+  boltzmann_[0] = exp(8/T_);
+  boltzmann_[4] = exp(4/T_);
+  boltzmann_[8] = exp(0);
+  boltzmann_[12] = exp(-4/T_);
+  boltzmann_[16] = exp(-8/T_);
  
 }
 
@@ -77,31 +77,30 @@ void Lattice::Metropolis()
   uniform_real_distribution<double> index(0, 1);
   uniform_int_distribution<int> dist(0, L_-1);
   
-  for (int i=0; i<N_; i++)
+  for (int i=0; i<=N_; i++)
   {
 
     int x = dist(generator);
     int y = dist(generator);
-    //std::cout << x << y << std::endl;
+    
 
     int dE =  2 * spin_matrix_(x,y)*
         (spin_matrix_(x,pbc(y,L_,-1))+
         spin_matrix_(pbc(x,L_,-1),y) +
-        spin_matrix_(x,pbc(y,L_,1)) +
+        spin_matrix_(x,pbc(y,L_,+1)) +
         spin_matrix_(pbc(x,L_,1),y));
-
     
     double r = index(generator);
-
+/*
     if (dE <= 0)
     {
       E_ += dE;
       M_ += 2*spin_matrix_(x,y);
       spin_matrix_(x,y) *= -1;     
     }
+*/
 
-
-    else if(r<=boltzmann_[dE+8])
+     if(r<=boltzmann_[dE+8])
     {
       E_ += dE;
       M_ += 2*spin_matrix_(x,y);
@@ -131,6 +130,7 @@ void Lattice::MCMC()
     expectedM_ += abs(M_);
     expectedM2_ += M_*M_;
     epsilon_ += E_;
+    E_dist_[cycles] = E_;
     
   }
   //cout << expectedE_ << endl;
@@ -142,8 +142,9 @@ void Lattice::MCMC()
   epsilon_ /= N_;
   cv_ = (expectedE2_*N_ - expectedE_ * expectedE_ *(N_*N_)) /(T_*T_*N_);
   chi_ = (expectedM2_*N_ - expectedM_ * expectedM_ *(N_*N_)) /(T_*T_*N_);
+
   
-  //cout << cv_ << endl;
+  //cout << expectedE_ << endl;
 }
 
 
@@ -153,9 +154,9 @@ void Lattice::MCMC_burn_in_time(string filename_)
   string filename = filename_;
     ofstream ofile;
     ofile.open(filename);
-    int width = 15;
-    int prec = 8;
-    ofile << "MC_cycle" << " " << "{epsilon}" << "{|m|}" << " " << "E" <<  endl;
+    int width = 12;
+    int prec = 4;
+    //ofile << "MC_cycle" << " " << "{epsilon}" << "{|m|}" << " " << "E" <<  endl;
 
   double norm = 1./(MC_cycles_*N_);
   double *eps = new double[MC_cycles_];
@@ -172,8 +173,10 @@ void Lattice::MCMC_burn_in_time(string filename_)
     Metropolis();
     expectedE_ += E_;
     expectedM_ += abs(M_);
-    eps[cycles] = expectedE_ / (N_ * cycles);
-    mag[cycles] = expectedM_ / (N_ * cycles);
+    eps[cycles] = expectedE_ * norm;
+    mag[cycles] = expectedM_ * norm;
+    E_dist_[cycles] = E_;
+    //cout << E_dist_[cycles] << endl;
 
     ofile << setw(width) << setprecision(prec) << scientific << cycles << " " << eps[cycles] << " " << mag[cycles] << " " << expectedE_ << endl;
   }
