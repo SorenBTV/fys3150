@@ -27,10 +27,7 @@ int main()
     // Problem 4
     Lattice mysystem;
     mysystem.Initializer(L, 1.0, MC_cycles, false);
-    //cout << mysystem.spin_matrix_<< endl;
     mysystem.MCMC();
-    //cout << mysystem.E_dist_<< endl;
-    //cout << mysystem.spin_matrix_<< endl;
     mysystem.write_file_problem4();
     */
 
