@@ -33,12 +33,12 @@ int main()
     
 
 
-
+*/
     //Problem 5
     Lattice mysystem2;
-    mysystem2.Initializer(20, 1.0, 100000, false);
+    mysystem2.Initializer(20, 1.0, 1000, false);
     mysystem2.MCMC_burn_in_time("problem_5_T1.0_cycles10000_not_ordered.txt");
-
+/*
     Lattice mysystem3;
     mysystem2.Initializer(20, 1.0, 100000, true);
     mysystem2.MCMC_burn_in_time("problem_5_T1.0_cycles10000_ordered.txt");
@@ -54,7 +54,7 @@ int main()
 
 
     //Problem 6
-    
+
 
 
 
