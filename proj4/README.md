@@ -1,7 +1,10 @@
 For å kjøre .cpp koden:
 
 g++ -fopenmp -larmadillo -O3 -Wall -o main.exe main.cpp Lattice.cpp && ./main.exe
+
 Velg et av hvert alternativ for å få ut all dataen som trengs.
+
+
 
 
 For å kjøre python koden:
