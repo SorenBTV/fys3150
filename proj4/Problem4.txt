@@ -1,6 +1,0 @@
-Number of cycles =100000
-Numerical results
-{epsilon}=-1.99458000e+00 {|m|}= 9.98190000e-01 {C_v}= 4.35624944e-02 {chi}= 5.44689560e-03
-Analytical results
-{epsilon}=-1.99598209e+00 {|m|}= 9.98660733e-01 {C_v}= 3.20823319e-02 {chi}= 4.01073952e-03
- 

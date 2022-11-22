@@ -17,14 +17,17 @@ class Lattice
     private:
 
     public:
-    int L_;
-    int N_;
+    int64_t L_;
+    int64_t N_;
     double T_;
-    int MC_cycles_;
+    int64_t MC_cycles_;
     double E_;
     double M_;
+    bool ordered_;
     arma::vec beta_;
-    arma::Mat<int> spin_matrix_;
+    arma::mat spin_matrix_;
+    arma::vec eps;
+    arma::vec mag;
 
     double eps_;
     double eps2_;
@@ -32,15 +35,15 @@ class Lattice
     double m2;
     double c_v;
     double X;
-    double *boltzmann_;
-    arma::mat results_;
+    arma::vec boltzmann_;
+    
 
     mt19937 generator;
     uniform_int_distribution<int> int_01;
     uniform_int_distribution<int> dist;
     uniform_real_distribution<double> index;
 
-    double *E_dist_;
+    arma::vec E_dist_;
 
     double expectedE_;
     double expectedE2_;
@@ -49,6 +52,7 @@ class Lattice
     double epsilon_;
     double cv_;
     double chi_;
+    arma::vec energy;
     //arma::vec boltzmann;
 
     // A random number generator and the two basic 
@@ -62,11 +66,11 @@ class Lattice
     
 
     //Functions
-    void Initializer(int L, double T, int MC_cycles, bool ordered);
-    int pbc(int i, int limit, int add);
+    void Initializer(int64_t L, double T, int64_t MC_cycles, bool ordered);
+    int pbc(int64_t i, int64_t add);
     void Metropolis();
     void MCMC();
-    void MCMC_burn_in_time(string filename_);
+    void MCMC_burn_in_time_study(string filename);
     void write_file_problem4();
     void write_file();
 };
